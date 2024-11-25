@@ -76,6 +76,7 @@ async def load_productid(message: types.Message, state : FSMContext):
                                                             f"айди продукта - {data['productid']}")
     await message.answer("верны ли данные?(да/нет)", reply_markup=buttons.submit)
     await store.next()
+
 async def submit(message: types.Message, state=FSMContext):
     if message.text.lower() == 'да':
         kb_remove = types.ReplyKeyboardRemove()
@@ -86,29 +87,23 @@ async def submit(message: types.Message, state=FSMContext):
                 productid=data['productid'],
                 collection=data['collection']
             )
-        async with state.proxy() as data:
-            await db_main.sql_insert_store(
-                name_product=data['product_name'],
-                product_id=data['productid'],
-                size=data['size'],
-                price=data['price'],
-                photo=data['product_photo'],
-                )
+
 
             await db_main.sql_insert_store_to_product_details(
                 productid=data['productid'],
                 category=data['category'],
                 infoproduct=data['infoproduct']
             )
-        await state.finish()
+
 
     elif message.text.lower() == 'нет':
         kb_remove = types.ReplyKeyboardRemove()
         await message.answer('Отменено!', reply_markup=kb_remove)
-        await state.finish()
+
     else:
         await message.answer('Введите Да или Нет')
-        await state.finish()
+
+    await state.finish()
 
 
 

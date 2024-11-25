@@ -13,11 +13,11 @@ async def send_all_products(callback_query: types.CallbackQuery):
     if products:
         for product in products:
             caption = (f"Заполненный товар: \n"
-                       f"Название - {product['product_name']}\n"
-                       f"Артикул - {product['productid']}\n"
+                       f"Название - {product['name_product']}\n"
+                       f"Артикул - {product['product_id']}\n"
                        f"Размер - {product['size']}\n"
                        f"Цена - {product['price']}\n"
-                       f"Информация о товаре - {product['infoprouct']}\n"
+                       f"Информация о товаре - {product['info_product']}\n"
                        f"Категория - {product['category']}\n")
             delete_keyboard = types.InlineKeyboardMarkup(resize_keyboard=True)
             delete_button = types.InlineKeyboardButton('Удалить', callback_data=f'delete_{product["product_id"]}')

@@ -11,16 +11,18 @@ async def start_send_products(message: types.Message):
 async def send_all_products(callback_query: types.CallbackQuery):
     products = db_main.fetch_all_products()
     if products:
-        for product in products:
-            caption = str(f"Заполненный товар: \n"
-                       f"Название - {product['product_name']}\n"
-                       f"Артикул - {product['productid']}\n"
-                       f"Размер - {product['size']}\n"
-                       f"Цена - {product['price']}\n"
-                       f"Информация о товаре - {product['infoproduct']}\n"
-                       f"Категория - {product['category']}\n")
+        for data in products:
+            caption = f'''
+Заполненный товар:
+Название - data["product_name"]
+Артикул - data["productid"]
+Размер - data["size"]
+Цена - data["price"]
+Информация о товаре - data["infoproduct"]
+Категория - data["category"]
+'''
             await callback_query.message.answer_photo(
-                product['product_photo'],
+                photo=data['product_photo'],
                 caption=caption
             )
     else:

@@ -12,12 +12,12 @@ from db import db_main
 async def on_startup(_):
     for i in Admins:
         await bot.send_message(chat_id=i, text='бот активирован!')
-        await db_main.sql_create()
+
 async def on_shutdown(_):
     for i in Admins:
         await bot.send_message(chat_id=i, text="бот выключен")
 
-
+        await db_main.sql_create()
 commands.register_commands(dp)
 quiz.register_handler_quiz(dp)
 store.reg_handler_fsm_registration(dp)
